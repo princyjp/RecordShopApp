@@ -33,6 +33,8 @@ public class AddAlbumClickHandlers {
 
     }
     public void onBackBtnClick(View view){
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
 
     }
 }
