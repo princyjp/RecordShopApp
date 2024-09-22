@@ -4,9 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.example.recordshopapp.util.Converter"/>
 <variable
     name="albumDTO"
     type="com.example.recordshopapp.model.AlbumDTO" />
+        <variable
+            name="clickHandler"
+            type="com.example.recordshopapp.ui.mainactivity.addalbum.AddAlbumClickHandlers" />
+        <variable
+            name="album"
+            type="com.example.recordshopapp.model.Album" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/navy_blue"
-        tools:context=".ui.MainActivity.addalbum.AddNewAlbumActivity">
+        tools:context=".ui.mainactivity.addalbum.AddNewAlbumActivity">
 
         <TextView
             android:id="@+id/heading"
@@ -38,9 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
+            android:textSize="20dp"
             android:ems="10"
             android:hint="Price"
-            android:value="@={albumDTO.PriceDto}"
             android:inputType="numberDecimal"
             android:textColor="@color/neon"
             android:textColorHint="@color/neon"
@@ -48,7 +55,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/set_Year"
             tools:layout_editor_absoluteX="70dp"
-            tools:layout_editor_absoluteY="225dp" />
+            tools:layout_editor_absoluteY="225dp"
+            android:text="@={Converter.bigDecimalToString(albumDTO.PriceDto)}"
+          />
+        <!--
+          android:value="@={String.valueOf(album.price}"-->
 
         <EditText
             android:id="@+id/set_title"
@@ -57,6 +68,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="64dp"
             android:layout_marginEnd="5dp"
+            android:textSize="20dp"
             android:ems="10"
             android:hint="Title"
             android:text="@={albumDTO.title}"
@@ -74,11 +86,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
+            android:textSize="20dp"
             android:ems="10"
             android:hint="Artist"
-            android:text="@={albumDTO.artist.name}"
+            android:text="@={Converter.artistToString(albumDTO.artist)}"
             android:inputType="text"
             android:textColorHint="@color/neon"
+            android:textColor="@color/neon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/set_title"
@@ -91,13 +105,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:text="@={albumDTO.genre}"
-            android:outlineSpotShadowColor="@color/neon"
+            android:textSize="20sp"
+            android:backgroundTint="@color/neon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/set_artist"
             tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="138dp" />
+            tools:layout_editor_absoluteY="138dp"
+           />
 
         <EditText
             android:id="@+id/set_Year"
@@ -105,16 +120,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:ems="10"
+            android:ems="4"
+            android:textSize="20sp"
             android:hint="Release Year"
-            android:value="@={albumDTO.ReleaseYear}"
+            android:text="@={Converter.intToString(albumDTO.ReleaseYear)}"
             android:inputType="number"
             android:textColorHint="@color/neon"
+            android:textColor="@color/neon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinner_genre"
             tools:layout_editor_absoluteX="70dp"
             tools:layout_editor_absoluteY="170dp" />
+        <!---->
 
         <EditText
             android:id="@+id/set_stock"
@@ -123,15 +141,18 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:ems="10"
+            android:textSize="20sp"
             android:hint="Stock"
-            android:value="@={albumDTO.stock}"
+            android:text="@={Converter.intToString(albumDTO.stock)}"
             android:inputType="number"
             android:textColorHint="@color/neon"
+            android:textColor="@color/neon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/set_price"
             tools:layout_editor_absoluteX="70dp"
             tools:layout_editor_absoluteY="283dp" />
+        <!-- android:value="@={albumDTO.stock}"-->
 
         <Button
             android:id="@+id/add_button"
@@ -140,6 +161,7 @@
             android:layout_marginBottom="230dp"
             android:backgroundTint="@color/neon"
             android:text="ADD"
+            android:onClick="@{clickHandler::onAddBtnClick}"
             android:textColor="@color/navy_blue"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -154,8 +176,8 @@
             android:layout_height="57dp"
             android:layout_marginStart="26dp"
             android:layout_marginBottom="25dp"
-
             android:clickable="true"
+            android:onClick="@{clickHandler::onBackBtnClick}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@android:drawable/ic_menu_revert" />

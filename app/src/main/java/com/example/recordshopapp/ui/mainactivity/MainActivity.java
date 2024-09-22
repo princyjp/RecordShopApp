@@ -1,6 +1,5 @@
-package com.example.recordshopapp.ui.MainActivity;
+package com.example.recordshopapp.ui.mainactivity;
 
-import android.app.Application;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private AlbumAdapter albumAdapter;
     private MainActivityViewModel mainActivityViewModel;
     public ActivityMainBinding activityMainBinding;
+    private MainActivityClickHandler mainActivityClickHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        mainActivityClickHandler = new MainActivityClickHandler(this);
+        activityMainBinding.setMainClickHandler(mainActivityClickHandler);
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         getAllAlbums();
 //   //   To test if we are getting the right api response before binding:
