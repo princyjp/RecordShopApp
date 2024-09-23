@@ -1,15 +1,20 @@
 package com.example.recordshopapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 //import androidx.databinding.library.baseAdapters.BR;
 import com.example.recordshopapp.BR;
+import com.example.recordshopapp.util.Converter;
 import com.google.gson.annotations.SerializedName;
 
 import java.math.BigDecimal;
 import java.time.Year;
 
-public class AlbumDTO extends BaseObservable {
+public class AlbumDTO extends BaseObservable implements Parcelable {
     long id;
     @SerializedName("title")
     String title;
@@ -40,7 +45,39 @@ public class AlbumDTO extends BaseObservable {
 
     public AlbumDTO() {
     }
-//    @Bindable
+
+    protected AlbumDTO(Parcel in) {
+        id = in.readLong();
+        title = in.readString();
+        releaseYear = in.readInt();
+        stock = in.readInt();
+        genre = Genre.valueOf(in.readString());
+        artist = new Artist(in.readString());
+        priceDto = Converter.stringToBigDecimal(in.readString());
+    }
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(title);
+        parcel.writeInt(releaseYear);
+        parcel.writeInt(stock);
+        parcel.writeString(genre.name());
+        parcel.writeString(artist.getName());
+        parcel.writeString(Converter.bigDecimalToString(priceDto));
+    }
+    public static final Creator<AlbumDTO> CREATOR = new Creator<AlbumDTO>() {
+        @Override
+        public AlbumDTO createFromParcel(Parcel in) {
+            return new AlbumDTO(in);
+        }
+
+        @Override
+        public AlbumDTO[] newArray(int size) {
+            return new AlbumDTO[size];
+        }
+    };
+
+    //    @Bindable
     public long getId() {
         return id;
     }
@@ -116,4 +153,11 @@ public class AlbumDTO extends BaseObservable {
                 ", artist=" + artist.getName() +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
 }
