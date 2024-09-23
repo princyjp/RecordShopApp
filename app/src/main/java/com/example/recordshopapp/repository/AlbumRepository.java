@@ -1,4 +1,4 @@
-package com.example.recordshopapp.model;
+package com.example.recordshopapp.repository;
 
 import android.app.Application;
 import android.util.Log;
@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.recordshopapp.model.Album;
+import com.example.recordshopapp.model.AlbumDTO;
 import com.example.recordshopapp.service.AlbumApiService;
 import com.example.recordshopapp.service.RetrofitInstance;
 
@@ -58,6 +60,45 @@ public class AlbumRepository {
             public void onFailure(Call<AlbumDTO> call, Throwable t) {
                 Log.e("POST Request",t.getMessage());
                 Toast.makeText(application,"FAIL: Unable to add Album!",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void updateAlbum(Long id, AlbumDTO albumDTO){
+        AlbumApiService albumApiService = RetrofitInstance.getService();
+        Call<AlbumDTO> call = albumApiService.updateAlbum(id,albumDTO);
+        call.enqueue(new Callback<AlbumDTO>() {
+            @Override
+            public void onResponse(Call<AlbumDTO> call, Response<AlbumDTO> response) {
+                if(response != null){
+                    Log.i("PUT resposne", response.body().toString());
+                }
+                Toast.makeText(application, "SUCCESS: Album updated", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<AlbumDTO> call, Throwable t) {
+                Log.e("PUT Error", t.getMessage());
+                Toast.makeText(application,"FAIL: Unable to update Album!",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void deleteAlbum(Long id){
+        AlbumApiService albumApiService = RetrofitInstance.getService();
+        Call<String> call = albumApiService.deleteAlbum(id);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response != null){
+                    Log.i("DELETE resposne", response.body());
+                }
+                Toast.makeText(application, "SUCCESS: Album deleted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("DELETE Error", t.getMessage());
+                Toast.makeText(application,"FAIL: Unable to delete Album!",Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.recordshopapp.model.Album;
 import com.example.recordshopapp.model.AlbumDTO;
-import com.example.recordshopapp.model.AlbumRepository;
+import com.example.recordshopapp.repository.AlbumRepository;
 
 import java.util.List;
 
