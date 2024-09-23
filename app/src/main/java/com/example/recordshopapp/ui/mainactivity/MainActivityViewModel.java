@@ -24,4 +24,6 @@ public class MainActivityViewModel extends AndroidViewModel {
     public void postAlbum(AlbumDTO albumDTO){
         albumRepository.postAlbum(albumDTO);
     }
+    public void updateAlbum(Long id, AlbumDTO albumDTO){albumRepository.updateAlbum(id,albumDTO);}
+    public void deleteAlbum(Long id){albumRepository.deleteAlbum(id);}
 }
