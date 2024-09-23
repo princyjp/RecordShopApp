@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
     private void displayInRecyclerView() {
         recyclerView = activityMainBinding.recyclerView;
-        albumAdapter = new AlbumAdapter(albumList,this);
+        albumAdapter = new AlbumAdapter(albumList,this, this);
         recyclerView.setAdapter(albumAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -69,6 +69,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
     @Override
     public void onItemClick(int position) {
-        
+
     }
 }
